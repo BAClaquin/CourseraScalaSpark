@@ -104,7 +104,11 @@ class StackOverflow extends Serializable {
       highScore
     }
 
-    ???
+    val questionsAnswers = grouped.flatMap(_._2).groupByKey()
+
+    val questionsHighScore = questionsAnswers.map(qa => (qa._1,answerHighScore(qa._2.toArray)))
+
+    questionsHighScore
   }
 
 
@@ -124,7 +128,9 @@ class StackOverflow extends Serializable {
       }
     }
 
-    ???
+    scored.map(s => {
+      (firstLangInTag(s._1.tags,langs).get*langSpread,s._2)
+    })
   }
 
 
